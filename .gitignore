@@ -1,0 +1,7 @@
+new.rb
+.bundle
+tmp
+.DS_Store
+deploy.rb
+/config/deploy/*.rb
+*.yml

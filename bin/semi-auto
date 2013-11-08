@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../config/boot', File.dirname(__FILE__))
+require 'optparse'
+require 'semi_auto/runner'
+
+options = {}
+
+OptionParser.new do |opts|
+  opts.banner = 'Usage: semi-auto [options]'
+
+  opts.on('-c', '--config [CONFIG_FILE]', 'Configuration file') do |config_file_path|
+    options[:config_file_path] = config_file_path
+  end
+end.parse!
+
+options[:task] = ARGV.first
+puts options.inspect
+
+SemiAuto::Runner.new(options).run
