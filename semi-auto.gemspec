@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Inbeom Hwang']
   spec.email         = ['hwanginbeom@gmail.com']
   spec.description   = 'Scale up/down your AWS instances on your own locally without Auto Scaling'
-  spec.summary       = 'Semi-automatic scaling for web applications deployed on AWS with Capistrano'
-  spec.homepage      = ''
+  spec.summary       = 'Semi-automatic scaling of applications on AWS without Auto Scaling'
+  spec.homepage      = 'https://github.com/inbeom/semi_auto'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files`.split($/)
