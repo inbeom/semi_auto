@@ -14,6 +14,6 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-options[:task] = ARGV.first
+options[:task] = ARGV
 
 SemiAuto::Runner.new(options).run
