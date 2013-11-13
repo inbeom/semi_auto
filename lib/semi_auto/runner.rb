@@ -3,6 +3,8 @@ module SemiAuto
     TASKS = { up: 'up', down: 'down' }
 
     def initialize(options = {})
+      options[:config_file_path] ||= 'config/semi_auto.yml'
+
       @configuration = SemiAuto::Configuration.new(options)
       @task = options[:task]
     end
