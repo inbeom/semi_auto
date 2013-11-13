@@ -15,7 +15,6 @@ module SemiAuto
 
     def read
       @configurations = YAML.load(file.read) if file
-      puts @configurations.inspect
 
       load_with_defaults
     end
