@@ -29,7 +29,13 @@ Or install it yourself as:
 Usage
 -----
 
-Write config file for your environment:
+### For Rails applications
+
+Generate templates for `semi_auto` using generator:
+
+    rails g semi_auto:install
+
+Write config file located at `config/semi_auto.yml` for your environment:
 
     ---
     :access_key_id: [Your AWS access key]
@@ -37,6 +43,12 @@ Write config file for your environment:
     :region: [Your AWS region]
     :load_balancer_name: [ELB instance name]
     :prefix: [Common prefix for your application instances]
+
+Customize `config/deploy/semi_auto.rb.erb`:
+
+    role :web, '<%= public_dns_name %>'
+    role :app, '<%= public_dns_name %>'
+    role :db, '<%= public_dns_name %>'
 
 Provide tasks listed below in `config/deploy.rb`:
 
@@ -46,11 +58,25 @@ Provide tasks listed below in `config/deploy.rb`:
 
 Scaling up:
 
-    $ semi-auto -c [Path to config file] up
+    $ semi-auto up
 
 Scaling down:
 
-    $ semi-auto -c [Path to config file] down
+    $ semi-auto down
+
+Match number of instances to specified number:
+
+    $ semi-auto match 2
+
+### For non-Rails applications
+
+Write your configuration file and stage template. Stage template should be
+located at `config/deploy/semi_auto.rb.erb`.
+
+When running `semi_auto`, provide path of configuration file unless it is
+located at `config/semi_auto.yml`:
+
+    $ semi-auto -c [PATH TO CONFIG FILE] up
 
 Requirements
 ------------
