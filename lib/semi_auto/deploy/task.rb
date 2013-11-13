@@ -3,16 +3,22 @@ require 'semi_auto/deploy/stage'
 module SemiAuto
   module Deploy
     class Task
+      class Failed < StandardError; end
+
       def initialize(options = {})
-        @stage = SemiAuto::Deploy::Stage.new(file_path: 'config/deploy/new.rb.erb')
+        @environment = options[:environment] || 'semi_auto'
         @task = options[:task] || 'deploy'
+      end
+
+      def stage
+        SemiAuto::Deploy::Stage.new(file_path: "config/deploy/#{@environment}.rb.erb")
       end
 
       def bootstrap(instance)
         SemiAuto.logger.info("Starting bootstrapping #{instance.name}...")
 
-        @stage.generate_stage_file_with(instance)
-        system('bundle exec cap new deploy:bootstrap')
+        stage.generate_stage_file_with(instance)
+        system("bundle exec cap #{@environment} deploy:bootstrap") || raise(Failed.new)
 
         SemiAuto.logger.info("Finished bootstrapping #{instance.name}.")
       end
@@ -20,7 +26,8 @@ module SemiAuto
       def execute(instance)
         SemiAuto.logger.info("Starting executing #{@task} task to #{instance.name}...")
 
-        system("bundle exec cap new #{@task}")
+        stage.generate_stage_file_with(instance)
+        system("bundle exec cap #{@environment} #{@task}") || raise(Failed.new)
 
         SemiAuto.logger.info("Finished executing #{@task} task to #{instance.name}.")
       end
