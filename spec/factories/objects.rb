@@ -16,8 +16,8 @@ FactoryGirl.define do
       attributes_hash do
         {
           instance_id: instance_id,
-          public_dns_name: public_dns_name,
-          tags: tags
+          dns_name: public_dns_name,
+          tag_set: tags
         }
       end
 
@@ -40,7 +40,7 @@ FactoryGirl.define do
     status { status_hash }
 
     initialize_with do
-      new(instances: [attributes_hash])
+      new(instances_set: [attributes_hash])
     end
   end
 

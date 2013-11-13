@@ -7,7 +7,7 @@ describe SemiAuto::Pool do
   describe '#fetch_instances' do
     let(:instance_names) { ['test01', 'test02', 'test03', 'test04'] }
     let(:instances) { instance_names.map { |name| FactoryGirl.create(:instance, name: name) } }
-    let(:response) { { reservations: instances.map { |instance| { instances: [instance.attributes] } } } }
+    let(:response) { { reservation_set: instances.map { |instance| { instances_set: [instance.attributes] } } } }
     let(:stub_ec2_instance) { double(describe_instances: response) }
 
     before do

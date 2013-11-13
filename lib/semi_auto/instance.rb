@@ -5,7 +5,7 @@ module SemiAuto
     attr_accessor :status
 
     def initialize(attributes = {})
-      @attributes = attributes[:instances].first
+      @attributes = attributes[:instances_set].first
     end
 
     def name
@@ -13,7 +13,7 @@ module SemiAuto
     end
 
     def tags
-      @tags ||= @attributes[:tags].inject({}) do |result, key_and_value|
+      @tags ||= @attributes[:tag_set].inject({}) do |result, key_and_value|
         result.merge(key_and_value[:key].to_s.downcase.to_sym => key_and_value[:value])
       end
     end
@@ -23,7 +23,7 @@ module SemiAuto
     end
 
     def public_dns_name
-      @attributes[:public_dns_name]
+      @attributes[:dns_name]
     end
 
     def state
@@ -59,15 +59,15 @@ module SemiAuto
     end
 
     def refresh_status
-      response = SemiAuto::Util.convert_to_native_types(SemiAuto.ec2_instance.describe_instance_status(instance_ids: [instance_id], include_all_instances: true))
+      response = SemiAuto.ec2_instance.describe_instance_status(instance_ids: [instance_id], include_all_instances: true)
 
-      self.status = response[:instance_statuses].first
+      self.status = response[:instance_status_set].first
     end
 
     def refresh_description
-      response = SemiAuto::Util.convert_to_native_types(SemiAuto.ec2_instance.describe_instances(instance_ids: [instance_id]))
+      response = SemiAuto.ec2_instance.describe_instances(instance_ids: [instance_id])
 
-      @attributes = response[:reservations].first[:instances].first
+      @attributes = response[:reservation_set].first[:instances_set].first
     end
 
     def priority

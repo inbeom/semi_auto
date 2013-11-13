@@ -24,7 +24,7 @@ module SemiAuto
     end
 
     def fetch_load_balancer
-      response = SemiAuto::Util.convert_to_native_types(SemiAuto.elb_instance.describe_load_balancers)
+      response = SemiAuto.elb_instance.describe_load_balancers
 
       @load_balancer = response[:load_balancer_descriptions].map do |load_balancer_description|
         SemiAuto::LoadBalancer.new(load_balancer_description)

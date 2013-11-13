@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe SemiAuto::Instance do
-  let(:attributes) { { tags: [] } }
-  let(:instance) { SemiAuto::Instance.new instances: [attributes] }
+  let(:attributes) { { tag_set: [] } }
+  let(:instance) { SemiAuto::Instance.new instances_set: [attributes] }
 
   describe '#name' do
     let(:name) { 'test-instance' }
     let(:attributes) do
       {
-        tags: [
+        tag_set: [
           { key: 'name', value: name }
         ]
       }
@@ -20,7 +20,7 @@ describe SemiAuto::Instance do
   describe '#tags' do
     let(:attributes) do
       {
-        tags: [
+        tag_set: [
           { key: 'tag1', value: 'value1' },
           { key: 'tag2', value: 'value2' }
         ]
@@ -45,7 +45,7 @@ describe SemiAuto::Instance do
     let(:public_dns_name) { 'some.url.compute.amazonaws.com' }
     let(:attributes) do
       {
-        public_dns_name: public_dns_name
+        dns_name: public_dns_name
       }
     end
 
@@ -55,7 +55,7 @@ describe SemiAuto::Instance do
   describe '#refresh_status' do
     let(:status) do
       {
-        instance_statuses: [
+        instance_statuses_set: [
           {
             system_status: {
               status: 'ok'
@@ -81,7 +81,7 @@ describe SemiAuto::Instance do
     context 'when it is refreshed' do
       before { instance.refresh_status }
 
-      it { expect(instance.status).to eq(status[:instance_statuses].first) }
+      it { expect(instance.status).to eq(status[:instance_statuses_set].first) }
     end
   end
 
@@ -89,7 +89,7 @@ describe SemiAuto::Instance do
     let(:name) { 'test-instance' }
     let(:new_attributes) do
       {
-        tags: [
+        tag_set: [
           { key: 'name', value: name }
         ]
       }
@@ -115,7 +115,7 @@ describe SemiAuto::Instance do
     let(:name) { 'test-instance0123' }
     let(:attributes) do
       {
-        tags: [
+        tag_set: [
           { key: 'name', value: name }
         ]
       }

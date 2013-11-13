@@ -16,17 +16,17 @@ module SemiAuto
     end
 
     def fetch_instances
-      response = SemiAuto::Util.convert_to_native_types(SemiAuto.ec2_instance.describe_instances)
+      response = SemiAuto.ec2_instance.describe_instances
 
       SemiAuto.logger.info "Fetching instances... with prefix #{@prefix}"
 
-      @instances = response[:reservations].map { |instance| SemiAuto::Instance.new(instance) }.select { |instance| instance.name.start_with?(prefix) }.sort_by(&:priority)
+      @instances = response[:reservation_set].map { |instance| SemiAuto::Instance.new(instance) }.select { |instance| instance.name.start_with?(prefix) }.sort_by(&:priority)
     end
 
     def fetch_instance_status
-      response = SemiAuto::Util.convert_to_native_types(SemiAuto.ec2_instance.describe_instance_status(instance_ids: @instances.map(&:instance_id), include_all_instances: true))
+      response = SemiAuto.ec2_instance.describe_instance_status(instance_ids: @instances.map(&:instance_id), include_all_instances: true)
 
-      response[:instance_statuses].each do |status|
+      response[:instance_status_set].each do |status|
         instance_by_instance_id(status[:instance_id]).status = status
       end
     end

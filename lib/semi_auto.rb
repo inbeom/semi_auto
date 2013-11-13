@@ -7,19 +7,17 @@ module SemiAuto
   def self.configure(configuration = nil)
     @configuration = configuration || SemiAuto::Configuration.new
 
-    Aws.config = {
-      access_key_id: @configuration.access_key_id,
+    AWS.config access_key_id: @configuration.access_key_id,
       secret_access_key: @configuration.secret_access_key,
       region: @configuration.region
-    }
   end
 
   def self.ec2_instance
-    @ec2_instance ||= Aws::EC2.new
+    @ec2_instance ||= AWS::EC2.new.client
   end
 
   def self.elb_instance
-    @elb_instance ||= Aws::ElasticLoadBalancing.new
+    @elb_instance ||= AWS::ELB.new.client
   end
 
   def self.logger
