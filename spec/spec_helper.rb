@@ -1,9 +1,11 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'factory_girl'
-# require 'semi-auto'
 
-Dir['./lib/**/*.rb'].each { |f| require f }
+$:.unshift(File.join(File.dirname(__FILE__), '../lib'))
+require 'semi_auto'
+
+Dir['./lib/semi_auto/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
   config.before(:suite) do
