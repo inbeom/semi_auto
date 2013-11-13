@@ -27,4 +27,8 @@ module SemiAuto
       logger.level == Logger::INFO
     end
   end
+
+  def self.logger=(logger)
+    @logger = logger
+  end
 end
