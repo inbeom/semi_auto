@@ -49,6 +49,10 @@ module SemiAuto
       SemiAuto.logger.info('Waiting 30 seconds to wait requests to be processed...')
       sleep 30
 
+      SemiAuto::Deploy::Task.new(task: 'deploy:stop').tap do |task|
+        task.execute(instance)
+      end
+
       @pool.stop(instance)
     end
   end
