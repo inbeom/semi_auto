@@ -3,8 +3,8 @@ require 'semi_auto/instance'
 module SemiAuto
   # Public: Instance pool for specific service.
   class Pool
-    attr_reader :instances
-    attr_reader :prefix
+    attr_accessor :instances
+    attr_accessor :prefix
 
     def initialize(options = {})
       @prefix = options[:prefix] || ''
