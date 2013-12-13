@@ -20,7 +20,7 @@ module SemiAuto
 
       SemiAuto.logger.info "Fetching instances... with prefix #{@prefix}"
 
-      @instances = response[:reservation_set].map { |instance| SemiAuto::Instance.new(instance) }.select { |instance| instance.name.start_with?(prefix) }.sort_by(&:priority)
+      @instances = response[:reservation_set].map { |instance| SemiAuto::Instance.new(instance) }.select { |instance| instance.name && instance.name.start_with?(prefix) }.sort_by(&:priority)
     end
 
     def fetch_instance_status
