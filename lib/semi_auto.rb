@@ -2,6 +2,7 @@ require 'logger'
 require 'semi_auto/configuration'
 require 'semi_auto/service'
 require 'semi_auto/util'
+require 'aws'
 
 module SemiAuto
   def self.configure(configuration = nil)
